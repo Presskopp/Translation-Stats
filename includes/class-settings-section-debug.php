@@ -211,12 +211,21 @@ if ( ! class_exists( __NAMESPACE__ . '\Settings_Section_Debug' ) ) {
 					esc_html__( 'Translation Stats Locale: %s', 'translation-stats' ),
 					'<code>' . esc_html( $options['settings']['translation_language'] ) . '</code>'
 				);
-				$translationstats_locale = Translations_API::locale( Utils::translation_language() );
+				$json_encoded = wp_json_encode(
+					Translations_API::locale( Utils::translation_language() ),
+					JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES
+				);
 				?>
 			</p>
-			<div>
-				<pre><code class="tstats-code-block"><?php echo esc_html( wp_json_encode( $translationstats_locale, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES ) ); ?></code></pre>
-			</div>
+			<?php
+			if ( $json_encoded ) {
+				?>
+				<div>
+					<pre><code class="tstats-code-block"><?php echo esc_html( $json_encoded ); ?></code></pre>
+				</div>
+				<?php
+			}
+			?>
 			<p>
 				<?php
 				printf(
@@ -241,9 +250,15 @@ if ( ! class_exists( __NAMESPACE__ . '\Settings_Section_Debug' ) ) {
 			<div>
 				<?php
 				if ( isset( $options['settings'] ) ) {
-					?>
-					<pre><code class="tstats-code-block"><?php echo esc_html( wp_json_encode( $options['settings'], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES ) ); ?></code></pre>
-					<?php
+					$json_encoded = wp_json_encode(
+						$options['settings'],
+						JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES
+					);
+					if ( $json_encoded ) {
+						?>
+						<pre><code class="tstats-code-block"><?php echo esc_html( $json_encoded ); ?></code></pre>
+						<?php
+					}
 				} else {
 					?>
 					<code><?php esc_html_e( 'No settings found.', 'translation-stats' ); ?></code>
@@ -257,9 +272,15 @@ if ( ! class_exists( __NAMESPACE__ . '\Settings_Section_Debug' ) ) {
 			<div>
 				<?php
 				if ( isset( $options['plugins'] ) ) {
-					?>
-					<pre><code class="tstats-code-block"><?php echo esc_html( wp_json_encode( $options['plugins'], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES ) ); ?></code></pre>
-					<?php
+					$json_encoded = wp_json_encode(
+						$options['plugins'],
+						JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES
+					);
+					if ( $json_encoded ) {
+						?>
+						<pre><code class="tstats-code-block"><?php echo esc_html( $json_encoded ); ?></code></pre>
+						<?php
+					}
 				} else {
 					?>
 					<code><?php esc_html_e( 'No settings found.', 'translation-stats' ); ?></code>
@@ -307,9 +328,15 @@ if ( ! class_exists( __NAMESPACE__ . '\Settings_Section_Debug' ) ) {
 					foreach ( $transients as $transient ) {
 						$response[] = esc_html( substr( $transient, strlen( '_transient_' ) ) );
 					}
-					?>
-					<pre><code class="tstats-code-block"><?php echo esc_html( wp_json_encode( $response, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES ) ); ?></code></pre>
-					<?php
+					$json_encoded = wp_json_encode(
+						$response,
+						JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES
+					);
+					if ( $json_encoded ) {
+						?>
+						<pre><code class="tstats-code-block"><?php echo esc_html( $json_encoded ); ?></code></pre>
+						<?php
+					}
 				} else {
 					?>
 					<code class="tstats-code-block"><?php esc_html_e( 'No transients found.', 'translation-stats' ); ?></code>
