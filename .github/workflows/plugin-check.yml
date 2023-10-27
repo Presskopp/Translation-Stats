@@ -36,8 +36,8 @@ jobs:
   #
   # For the detailed list of checks:
   # - https://wordpress.org/plugins/plugin-check/
-  php-compatibility:
-    name: PHP compatibility
+  plugin-check:
+    name: Plugin Check
     runs-on: ubuntu-latest
 
     steps:
